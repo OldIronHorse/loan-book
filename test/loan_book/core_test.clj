@@ -14,6 +14,12 @@
        :leaves 1000}
       (create-order "Ben" :lend 1000 8.25 10)))))
 
+(deftest test-create-book
+  (testing "create a book"
+    (is (=
+      {:term 10, :lends '(), :borrows '()}
+      (create-book 10)))))
+
 (deftest test-add-order
   (testing "Add order to an empty book"
     (is (=

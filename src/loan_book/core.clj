@@ -1,9 +1,15 @@
 (ns loan-book.core)
 
 (defn create-order
+  "Create a new order"
   [party side principal rate term]
   {:party party, :side side, :principal principal, :rate rate, :term term,
    :leaves principal})
+
+(defn create-book
+  "Create a new, empty book."
+  [term]
+  {:term term, :lends '(), :borrows '()})
 
 (defn add-order
   "Add a loan order to the specified order book. Return the updated book."
@@ -13,6 +19,7 @@
     :lend (update book :lends #(sort-by :rate (cons order %)))))
 
 (defn contract-between
+  "Create a contract for the specified amount between a lend/borrow pair."
   [amount borrow lend]
   (let
     [borrow' (update borrow :leaves #(- % amount))
