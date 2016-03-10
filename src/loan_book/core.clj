@@ -6,3 +6,8 @@
   (case (:side order)
     :borrow (update book :borrows #(sort-by :rate > (cons order %)))
     :lend (update book :lends #(sort-by :rate (cons order %)))))
+
+(defn cross
+  "Cross an orderbook at the specified margin."
+  [margin, book]
+  {:contracts '(), :book book})

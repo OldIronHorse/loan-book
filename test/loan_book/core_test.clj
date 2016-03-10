@@ -71,3 +71,24 @@
          :borrows '({:principle 1000, :side :borrow, :rate 7.5}
                     {:principle 2000, :side :borrow, :rate 6.5})}
         {:principle 10000, :side :borrow, :rate 7})))))
+
+(deftest test-cross
+  (testing "Cross an empty book"
+    (is (=
+      {:contracts '(), :book {:lends '(), :borrows '()}}
+      (cross 1 {:lends '(), :borrows '()}))))
+  (testing "Cross a single-sdied book (borrow)."
+    (let
+      [book {:borrows '({:principle 1000, :side :borrow, :rate 6.5}),
+             :lends '()}]
+      (is (= {:contracts '(), :book book} (cross 1 book)))))
+  (testing "Cross a single-sdied book (lend)."
+    (let
+      [book {:lends '({:principle 1000, :side :lend, :rate 6.5}),
+             :borrows '()}]
+      (is (= {:contracts '(), :book book} (cross 1 book)))))
+  (testing "Cross a book with orders outside the margin."
+    (let
+      [book {:lends '({:principle 1000, :side :lend, :rate 6.5}),
+             :borrows '({:principle 1000, :side :borrow, :rate 4.5})}]
+      (is (= {:contracts '(), :book book} (cross 1 book))))))
