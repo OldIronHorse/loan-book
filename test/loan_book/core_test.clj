@@ -2,6 +2,18 @@
   (:require [clojure.test :refer :all]
             [loan-book.core :refer :all]))
 
+(deftest test-create-order
+  (testing "create a borrow order"
+    (is (=
+      {:party "Bill", :principal 5000, :side :borrow, :rate 6.75, :term 10,
+       :leaves 5000}
+      (create-order "Bill" :borrow 5000 6.75 10))))
+  (testing "create a lend order"
+    (is (=
+      {:party "Ben", :principal 1000, :side :lend, :rate 8.25, :term 10,
+       :leaves 1000}
+      (create-order "Ben" :lend 1000 8.25 10)))))
+
 (deftest test-add-order
   (testing "Add order to an empty book"
     (is (=

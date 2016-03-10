@@ -1,5 +1,10 @@
 (ns loan-book.core)
 
+(defn create-order
+  [party side principal rate term]
+  {:party party, :side side, :principal principal, :rate rate, :term term,
+   :leaves principal})
+
 (defn add-order
   "Add a loan order to the specified order book. Return the updated book."
   [book, order]
@@ -31,9 +36,9 @@
          book' 
           (update
             (update book :borrows 
-              #(filter (fn [b] (> (:leaves b) 0)) 
+              #(filter (fn [b] (pos? (:leaves b))) 
               (cons (:borrow contract) (rest %))))
-            :lends #(filter (fn [l] (> (:leaves l) 0)) 
+            :lends #(filter (fn [l] (pos? (:leaves l))) 
             (cons (:lend contract) (rest %))))]
         (list (list contract) book'))
       (list '(), book))))
