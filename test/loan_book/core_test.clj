@@ -129,9 +129,11 @@
         {:lends '({:principal 1500, :leaves 1500, :side :lend, :rate 6.5}),
          :borrows '({:principal 2000, :leaves 2000, :side :borrow, :rate 8.5})}
         book'))
-      (is (= '({:amount 1000,
-                :borrow {:principal 1000, :leaves 0, :side :borrow, :rate 8.5},
-                :lend {:principal 1000, :leaves 0, :side :lend, :rate 6.5}})))))
+      (is (=
+        '({:amount 1000,
+           :borrow {:principal 1000, :leaves 0, :side :borrow, :rate 8.5},
+           :lend {:principal 1000, :leaves 0, :side :lend, :rate 6.5}})
+        contracts))))
   (testing "Cross a book with partial lend at the margin."
     (let
       [book {:lends '({:principal 1000, :leaves 500, :side :lend, :rate 6.5}
@@ -144,9 +146,11 @@
          :borrows '({:principal 1100, :leaves 600, :side :borrow, :rate 8.5}
                     {:principal 2000, :leaves 2000, :side :borrow, :rate 8.5})}
         book'))
-      (is (= '({:amount 1000,
-                :borrow {:principal 1100, :leaves 600, :side :borrow, :rate 8.5},
-                :lend {:principal 1000, :leaves 0, :side :lend, :rate 6.5}}))))))
+      (is (=
+        '({:amount 500,
+           :borrow {:principal 1100, :leaves 600, :side :borrow, :rate 8.5},
+           :lend {:principal 1000, :leaves 0, :side :lend, :rate 6.5}})
+        contracts)))))
 ;TODO partial borrow
 
 (deftest test-contract-between
