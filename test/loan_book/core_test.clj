@@ -114,7 +114,8 @@
   (testing "Cross a book with orders outside the margin."
     (let
       [book {:lends '({:principal 1000, :leaves 1000, :side :lend, :rate 6.5}),
-             :borrows '({:principal 1000, :leaves 1000, :side :borrow, :rate 6.5})}
+             :borrows '({:principal 1000, :leaves 1000, :side :borrow,
+                         :rate 6.5})}
        [contracts book'] (cross 1 book)]
       (is (= '() contracts)
       (is (= book book')))))
@@ -122,8 +123,10 @@
     (let
       [book {:lends '({:principal 1000, :leaves 1000, :side :lend, :rate 6.5}
                       {:principal 1500, :leaves 1500, :side :lend, :rate 6.5}),
-             :borrows '({:principal 1000, :leaves 1000, :side :borrow, :rate 8.5}
-                        {:principal 2000, :leaves 2000, :side :borrow, :rate 8.5})}
+             :borrows '({:principal 1000, :leaves 1000, :side :borrow,
+                         :rate 8.5}
+                        {:principal 2000, :leaves 2000, :side :borrow,
+                         :rate 8.5})}
        [contracts book'] (cross 2 book)]
       (is (= 
         {:lends '({:principal 1500, :leaves 1500, :side :lend, :rate 6.5}),
@@ -138,8 +141,10 @@
     (let
       [book {:lends '({:principal 1000, :leaves 500, :side :lend, :rate 6.5}
                       {:principal 1500, :leaves 1500, :side :lend, :rate 5.5}),
-             :borrows '({:principal 1100, :leaves 1100, :side :borrow, :rate 8.5}
-                        {:principal 2000, :leaves 2000, :side :borrow, :rate 8.5})}
+             :borrows '({:principal 1100, :leaves 1100, :side :borrow,
+                         :rate 8.5}
+                        {:principal 2000, :leaves 2000, :side :borrow,
+                         :rate 8.5})}
        [contracts book'] (cross 2 book)]
       (is (= 
         {:lends '({:principal 1500, :leaves 1500, :side :lend, :rate 5.5}),
@@ -156,7 +161,8 @@
       [book {:lends '({:principal 1000, :leaves 600, :side :lend, :rate 6.5}
                       {:principal 1500, :leaves 1500, :side :lend, :rate 5.5}),
              :borrows '({:principal 1100, :leaves 500, :side :borrow, :rate 8.5}
-                        {:principal 2000, :leaves 2000, :side :borrow, :rate 8.5})}
+                        {:principal 2000, :leaves 2000, :side :borrow,
+                         :rate 8.5})}
        [contracts book'] (cross 2 book)]
       (is (= 
         {:lends '({:principal 1000, :leaves 100, :side :lend, :rate 6.5}
