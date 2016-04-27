@@ -2,6 +2,18 @@
   (:require [clojure.test :refer :all]
             [loan-book.core :refer :all]))
 
+(deftest test-create-lend
+  (testing "create lend from account with sufficient funds."
+    (let
+      [account {:account-id "Bill", :balance 10000, :open-orders '()}
+       [account' lend] (create-lend account 6000 6.5 10)]
+    (is (=
+      lend
+      {:party "Bill", :side :lend, :principal 6000, :rate 6.5, :term 10, :leaves 6000}))
+    (is (=
+      account'
+      {:account-id "Bill", :balance 4000, :open-orders (list lend)})))))
+
 (deftest test-create-order
   (testing "create a borrow order"
     (is (=

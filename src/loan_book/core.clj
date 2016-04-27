@@ -6,6 +6,19 @@
   {:party party, :side side, :principal principal, :rate rate, :term term,
    :leaves principal})
 
+(defn create-lend
+  [lend-account size rate term]
+  (let
+    [order (create-order (:account-id lend-account) :lend size rate term)
+     lend-account' (update
+                    (update
+                      lend-account
+                      :balance
+                      #(- % size))
+                    :open-orders
+                    #(cons order %))]
+    (list lend-account' order)))
+
 (defn create-book
   "Create a new, empty book."
   [term]
